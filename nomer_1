@@ -1,0 +1,28 @@
+
+
+function tuda(r::Robot, side::HorizonSide)
+    while !isborder(r, side)
+       move!(r, side)
+       putmarker!(r)
+   end
+end    
+
+function inverse(side::HorizonSide)
+   HorizonSide(mod(Int(side)+2, 4))
+end
+
+function suda(r::Robot, side::HorizonSide)
+   while ismarker(r)==true 
+       move!(r, side)
+   end
+end
+
+function f(r::Robot)
+   for side in (Ost, Sud, West, Nord)
+       tuda(r, side)    
+       suda(r, inverse(side))
+   end 
+   putmarker!(r)
+end
+
+f(r)
