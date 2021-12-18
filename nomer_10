@@ -1,0 +1,36 @@
+using HorizonSideRobot
+inverse(side::HorizonSide)=HorizonSide(mod(Int(side)+2,4))
+
+function temp_sr(r::Robot, side::HorizonSide)
+    sum = 0 
+    count = 0
+    while isborder(r,Nord) == false
+        sum, count=moves!(r,side)
+        sum+=sum
+        count+=count
+        side = inverse(side)
+    end
+    s, c=moves!(r,side)
+    sum+=s
+    count+=c
+    return (sum/count)
+end
+
+
+function moves!(r::Robot,side::HorizonSide)
+    sum = 0 
+    count = 0
+    while isborder(r,side) == false
+        if ismarker(r) == true
+            count+=1
+            sum+= temperature(r)
+        end
+        move!(r,side)
+    end
+    if isborder(r,Nord) == false
+        move!(r,Nord)
+    end
+    return sum, count
+end
+
+temp_sr(r, Ost)
