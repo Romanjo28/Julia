@@ -1,4 +1,4 @@
-
+using HorizonSideRobot
 
 function tuda(r::Robot, side::HorizonSide)
     while !isborder(r, side)
